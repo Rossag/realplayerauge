@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Fantasy RPG design tokens ── */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e8c96a;
+  --gold-dim:    #8a6e30;
+  --gold-dark:   #3d2e10;
+  --parchment:   #f0e6c8;
+  --crimson:     #8b1a1a;
+  --crimson-mid: #b22222;
+  --forest:      #1a4a2a;
+  --forest-mid:  #2d6e42;
+  --sapphire:    #1a3060;
+  --sapphire-mid:#2a4a90;
+  --bg-deep:     #0d0a06;
+  --bg-panel:    #13100a;
+  --bg-card:     #1a1510;
+  --bg-raised:   #221c13;
+  --border-gold: #3d2e10;
+  --border-gold-bright: #5a4520;
+  --text-gold:   #c9a84c;
+  --text-parch:  #d4bc8a;
+  --text-muted:  #7a6a4a;
+  --text-dim:    #4a3e28;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: var(--bg-deep);
+  color: var(--text-parch);
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+body {
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+/* Fantasy heading font */
+.font-display { font-family: 'Cinzel', serif; }
+
+/* Safe area */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Scrollbar hidden */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Ornamental divider ── */
+.divider-gold {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  margin: 12px 0;
+}
+.divider-gold::before {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gold-dim);
+  font-size: 10px;
+  background: var(--bg-deep);
+  padding: 0 6px;
+}
+
+/* ── Panel / card styles ── */
+.panel-fantasy {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Corner ornaments on panels */
+.panel-fantasy::before,
+.panel-fantasy::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--gold-dim);
+  border-style: solid;
+}
+.panel-fantasy::before { top: 4px; left: 4px; border-width: 1px 0 0 1px; border-radius: 2px 0 0 0; }
+.panel-fantasy::after  { top: 4px; right: 4px; border-width: 1px 1px 0 0; border-radius: 0 2px 0 0; }
+
+/* ── Buff / debuff card colours ── */
+.card-buff   { background: rgba(26,74,42,0.25);  border: 1px solid rgba(45,110,66,0.4); }
+.card-debuff { background: rgba(80,16,16,0.25);  border: 1px solid rgba(139,26,26,0.4); }
+
+/* ── Gold text glow for high values ── */
+.text-glow-gold { text-shadow: 0 0 12px rgba(201,168,76,0.5); }
+
+/* ── Section label ── */
+.section-rune {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+
+/* ── Bottom nav ── */
+.nav-fantasy {
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-gold);
+}
+
+/* ── Stat orb glow on hover ── */
+.orb-hover-glow { filter: drop-shadow(0 0 8px var(--gold)); }
+
+/* ── Animated shimmer on gold borders ── */
+@keyframes shimmer {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1.0; }
+  100% { opacity: 0.6; }
+}
+.shimmer { animation: shimmer 3s ease-in-out infinite; }
+
+/* ── Ambience transitions ── */
+.ambience-transition { transition: background-color 1.4s ease; }
