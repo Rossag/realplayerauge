@@ -13,29 +13,25 @@ import MorningCheckin from './pages/MorningCheckin.jsx'
 import EveningCheckin from './pages/EveningCheckin.jsx'
 import QuestsPage from './pages/QuestsPage.jsx'
 
+const Spinner = () => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', background: '#0d0a06', flexDirection: 'column', gap: 16 }}>
+    <div style={{ width: 32, height: 32, border: '2px solid #c9a84c', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+    <p style={{ fontFamily: 'Cinzel, serif', fontSize: 11, color: '#5a4520', letterSpacing: '0.12em' }}>ENTERING THE REALM…</p>
+  </div>
+)
+
 export default function App() {
   const { session } = useAuth()
   useNotifications(session)
 
-  // Still checking session
-  if (session === undefined) {
-    return (
-      <div className="flex items-center justify-center h-full bg-bg-primary">
-        <div className="w-8 h-8 border-2 border-accent-purple border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
-  }
+  if (session === undefined) return <Spinner />
 
-  // Not logged in — show login
-  if (!session) {
-    return (
-      <Routes>
-        <Route path="*" element={<LoginPage />} />
-      </Routes>
-    )
-  }
+  if (!session) return (
+    <Routes>
+      <Route path="*" element={<LoginPage />} />
+    </Routes>
+  )
 
-  // Logged in — show the app
   return (
     <Routes>
       <Route element={<Layout />}>

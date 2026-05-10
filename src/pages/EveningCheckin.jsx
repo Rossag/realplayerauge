@@ -309,7 +309,7 @@ export default function EveningCheckin({ onComplete }) {
 
       <div style={{ display: 'flex', gap: 8 }}>
         <button onClick={() => setStep(0)} style={{ ...S.btn, background: 'transparent', border: '1px solid #3d2e10', color: '#4a3e28', flex: '0 0 80px' }}>← Back</button>
-        <button onClick={() => setStep(2)} style={{ ...S.btn, flex: 1 }}>Continue →</button>
+        <button onClick={() => { buildPreview(); setStep(2) }} style={{ ...S.btn, flex: 1 }}>Continue →</button>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import { supabase } from './supabase.js'
 import { subDays, startOfDay, endOfDay, startOfWeek, endOfWeek } from 'date-fns'
+import { EFFECT_DEFS, buildExpiresAt, buildStartsAt } from './engine.js'
 
 // ── Quest definitions ──
 export const QUEST_DEFS = {
@@ -346,7 +347,6 @@ export async function checkAndAwardQuest(userId, questId) {
 
   // Award reward effect if defined
   if (def.reward_effect) {
-    const { EFFECT_DEFS, buildExpiresAt, buildStartsAt } = await import('./engine.js')
     const effectDef = EFFECT_DEFS[def.reward_effect]
     if (effectDef) {
       await supabase.from('active_effects').insert({

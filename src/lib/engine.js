@@ -4,9 +4,9 @@ import { addHours, addDays, startOfDay, endOfDay } from 'date-fns'
 export const STATS = ['energy', 'focus', 'mood', 'charisma', 'strength', 'recovery']
 
 export const STAT_LABELS = {
-  energy: 'Energy',
-  focus: 'Focus',
-  mood: 'Mood',
+  energy:   'Energy',
+  focus:    'Focus',
+  mood:     'Mood',
   charisma: 'Charisma',
   strength: 'Strength',
   recovery: 'Recovery',
@@ -26,12 +26,16 @@ export const BASE_STATS = {
   energy: 50, focus: 50, mood: 50, charisma: 50, strength: 50, recovery: 50
 }
 
-// Effect definitions — keyed by effect_key
-// type: 'buff' | 'debuff'
-// stats: object of stat deltas
-// durationHours: how long it lasts
-// nextDay: true = effect starts at midnight tonight
+// ─────────────────────────────────────────────────────────────
+//  EFFECT DEFINITIONS
+//  type: 'buff' | 'debuff'
+//  stats: stat deltas applied while active
+//  durationHours: how long it lasts
+//  nextDay: true = effect starts at midnight tonight
+// ─────────────────────────────────────────────────────────────
 export const EFFECT_DEFS = {
+
+  // ── Sleep ─────────────────────────────────────────────────
   well_rested: {
     name: 'Well Rested',
     type: 'buff',
@@ -67,6 +71,8 @@ export const EFFECT_DEFS = {
     durationHours: 2,
     icon: '🥱',
   },
+
+  // ── Alcohol ───────────────────────────────────────────────
   social_ease: {
     name: 'Social Ease',
     type: 'buff',
@@ -105,6 +111,8 @@ export const EFFECT_DEFS = {
     nextDay: true,
     icon: '😵',
   },
+
+  // ── Exercise ──────────────────────────────────────────────
   post_workout: {
     name: 'Post-Workout High',
     type: 'buff',
@@ -135,6 +143,8 @@ export const EFFECT_DEFS = {
     nextDay: true,
     icon: '🦵',
   },
+
+  // ── Rest day ──────────────────────────────────────────────
   recovery_mode: {
     name: 'Recovery Mode',
     type: 'buff',
@@ -142,6 +152,8 @@ export const EFFECT_DEFS = {
     durationHours: 20,
     icon: '🛌',
   },
+
+  // ── Food ──────────────────────────────────────────────────
   well_fed: {
     name: 'Well Fed',
     type: 'buff',
@@ -170,6 +182,8 @@ export const EFFECT_DEFS = {
     durationHours: 2,
     icon: '😪',
   },
+
+  // ── Water ─────────────────────────────────────────────────
   hydrated: {
     name: 'Hydrated',
     type: 'buff',
@@ -184,6 +198,8 @@ export const EFFECT_DEFS = {
     durationHours: 4,
     icon: '🏜️',
   },
+
+  // ── Caffeine ──────────────────────────────────────────────
   caffeine_boost: {
     name: 'Caffeine Boost',
     type: 'buff',
@@ -206,6 +222,24 @@ export const EFFECT_DEFS = {
     nextDay: true,
     icon: '🌙',
   },
+
+  // ── Energy drink ──────────────────────────────────────────
+  energy_surge: {
+    name: 'Energy Surge',
+    type: 'buff',
+    stats: { energy: 20, focus: 15 },
+    durationHours: 3,
+    icon: '⚡',
+  },
+  energy_crash: {
+    name: 'Energy Crash',
+    type: 'debuff',
+    stats: { energy: -20, focus: -15, mood: -10 },
+    durationHours: 4,
+    icon: '🪫',
+  },
+
+  // ── Social ────────────────────────────────────────────────
   connected: {
     name: 'Connected',
     type: 'buff',
@@ -221,6 +255,8 @@ export const EFFECT_DEFS = {
     nextDay: true,
     icon: '😊',
   },
+
+  // ── Recharge / Solitude ───────────────────────────────────
   recharged: {
     name: 'Recharged',
     type: 'buff',
@@ -228,6 +264,8 @@ export const EFFECT_DEFS = {
     durationHours: 12,
     icon: '🔋',
   },
+
+  // ── Stress ────────────────────────────────────────────────
   stressed: {
     name: 'Stressed',
     type: 'debuff',
@@ -235,6 +273,8 @@ export const EFFECT_DEFS = {
     durationHours: 8,
     icon: '😰',
   },
+
+  // ── Sunlight ──────────────────────────────────────────────
   sun_kissed: {
     name: 'Sun-Kissed',
     type: 'buff',
@@ -249,16 +289,71 @@ export const EFFECT_DEFS = {
     durationHours: 10,
     icon: '🌅',
   },
+
+  // ── Work (long hours) ─────────────────────────────────────
+  grinding: {
+    name: 'Grinding',
+    type: 'buff',
+    stats: { focus: 10 },
+    durationHours: 6,
+    icon: '🕯️',
+  },
+  overworked: {
+    name: 'Overworked',
+    type: 'debuff',
+    stats: { energy: -20, focus: -10, mood: -10 },
+    durationHours: 18,
+    nextDay: true,
+    icon: '🧱',
+  },
+
+  // ── Travel ────────────────────────────────────────────────
+  wanderer_spirit: {
+    name: "Wanderer's Spirit",
+    type: 'buff',
+    stats: { mood: 15 },
+    durationHours: 12,
+    icon: '🧭',
+  },
+  road_weary: {
+    name: 'Road Weary',
+    type: 'debuff',
+    stats: { energy: -15, recovery: -10 },
+    durationHours: 20,
+    nextDay: true,
+    icon: '🗺️',
+  },
+
+  // ── Big event ─────────────────────────────────────────────
+  elated: {
+    name: 'Elated',
+    type: 'buff',
+    stats: { mood: 20, charisma: 15 },
+    durationHours: 12,
+    icon: '🎉',
+  },
+  social_drained: {
+    name: 'Social Drained',
+    type: 'debuff',
+    stats: { charisma: -15, energy: -10 },
+    durationHours: 16,
+    nextDay: true,
+    icon: '😶',
+  },
 }
 
-// Maps an event log to a list of effects to apply
-// Returns: Array of { effectKey, nextDay }
+// ─────────────────────────────────────────────────────────────
+//  RESOLVE EFFECTS
+//  Maps an event log to a list of effects to apply.
+//  Returns: Array of { effectKey }
+// ─────────────────────────────────────────────────────────────
 export function resolveEffects(eventType, value, metadata = {}) {
   const effects = []
-  const now = new Date()
+  const now  = new Date()
   const hour = now.getHours()
 
   switch (eventType) {
+
     case 'sleep': {
       const hrs = parseFloat(value)
       if (hrs >= 8) {
@@ -271,9 +366,7 @@ export function resolveEffects(eventType, value, metadata = {}) {
       } else {
         effects.push({ effectKey: 'sleep_deprived' })
       }
-      if (hrs > 10) {
-        effects.push({ effectKey: 'sleep_inertia' })
-      }
+      if (hrs > 10) effects.push({ effectKey: 'sleep_inertia' })
       break
     }
 
@@ -294,7 +387,7 @@ export function resolveEffects(eventType, value, metadata = {}) {
     }
 
     case 'exercise': {
-      const mins = parseFloat(value)
+      const mins      = parseFloat(value)
       const intensity = metadata.intensity || 'moderate'
       if (mins < 40) {
         effects.push({ effectKey: 'active' })
@@ -326,7 +419,7 @@ export function resolveEffects(eventType, value, metadata = {}) {
     case 'water': {
       const glasses = parseFloat(value)
       if (glasses >= 6) effects.push({ effectKey: 'hydrated' })
-      else effects.push({ effectKey: 'thirsty' })
+      else              effects.push({ effectKey: 'thirsty' })
       break
     }
 
@@ -335,6 +428,17 @@ export function resolveEffects(eventType, value, metadata = {}) {
       if (cups >= 1) effects.push({ effectKey: 'caffeine_boost' })
       if (cups >= 3) effects.push({ effectKey: 'jittery' })
       if (hour >= 15) effects.push({ effectKey: 'late_caffeine' })
+      break
+    }
+
+    case 'energy_drink': {
+      const cans = parseFloat(value)
+      // Immediate surge — crash follows as fatigue sets in
+      effects.push({ effectKey: 'energy_surge' })
+      effects.push({ effectKey: 'energy_crash' })
+      // Stacks with caffeine side effects
+      if (cans >= 2) effects.push({ effectKey: 'jittery' })
+      if (cans >= 3) effects.push({ effectKey: 'sleep_disrupted' })
       break
     }
 
@@ -359,12 +463,38 @@ export function resolveEffects(eventType, value, metadata = {}) {
       }
       break
     }
+
+    case 'work_long': {
+      const hrs = parseFloat(value)
+      // Focus buff while in the grind
+      effects.push({ effectKey: 'grinding' })
+      // Fatigue compounds — carries to next day at 10h+
+      if (hrs >= 10) effects.push({ effectKey: 'overworked' })
+      // Extreme hours also wreck sleep
+      if (hrs >= 13) effects.push({ effectKey: 'sleep_disrupted' })
+      break
+    }
+
+    case 'travel':
+      // Adventure mood lift + routine disruption next day
+      effects.push({ effectKey: 'wanderer_spirit' })
+      effects.push({ effectKey: 'road_weary' })
+      break
+
+    case 'big_event':
+      // Mood + charisma spike now, social drain tomorrow
+      effects.push({ effectKey: 'elated' })
+      effects.push({ effectKey: 'social_drained' })
+      break
   }
 
   return effects
 }
 
-// Given a list of active_effects rows, compute current stat totals
+// ─────────────────────────────────────────────────────────────
+//  COMPUTE STATS
+//  Given a list of active_effects rows, compute current totals
+// ─────────────────────────────────────────────────────────────
 export function computeStats(activeEffects) {
   const stats = { ...BASE_STATS }
   for (const effect of activeEffects) {
@@ -378,6 +508,10 @@ export function computeStats(activeEffects) {
   return stats
 }
 
+// ─────────────────────────────────────────────────────────────
+//  TIMESTAMP HELPERS
+// ─────────────────────────────────────────────────────────────
+
 // Build the expires_at timestamp for a new effect
 export function buildExpiresAt(effectKey) {
   const def = EFFECT_DEFS[effectKey]
@@ -387,7 +521,6 @@ export function buildExpiresAt(effectKey) {
 }
 
 // Build the starts_at timestamp — nextDay effects start at midnight tonight
-// Immediate effects start now
 export function buildStartsAt(effectKey) {
   const def = EFFECT_DEFS[effectKey]
   if (!def) return new Date().toISOString()
